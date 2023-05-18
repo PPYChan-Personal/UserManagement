@@ -12,4 +12,6 @@ public class UserListItemViewModel
     public string? Surname { get; set; }
     public string? Email { get; set; }
     public bool IsActive { get; set; }
+    public string? DateOfBirth { get; set; }
+
 }
