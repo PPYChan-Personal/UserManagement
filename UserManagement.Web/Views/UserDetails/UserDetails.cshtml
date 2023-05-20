@@ -1,0 +1,56 @@
+﻿@model UserManagement.Web.Models.Users.UserListItemViewModel
+
+<h2>User Details - @ViewData["ViewType"]</h2>
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="Create" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <input asp-for="Id" class="form-control" hidden="true" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Forename" class="control-label"></label>
+                <input asp-for="Forename" class="form-control" disabled="@ViewData["isView"]" />
+                <span asp-validation-for="Forename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" disabled="@ViewData["isView"]" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" disabled="@ViewData["isView"]" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" disabled="@ViewData["isView"]" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsActive" class="control-label"></label>
+                <input asp-for="@Model.IsActive" type="checkbox" checked="@Model.IsActive" disabled="@ViewData["isView"]" />
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input
+                        type="submit"
+                        name="close"
+                       value="@ViewData["btn_close_value"]"
+                        class="btn btn-primary"
+                       asp-route-ViewType="@ViewData["ViewType"]"/>
+                <input
+                        type="submit"
+                        name="save"
+                       value="@ViewData["btn_save_value"]"
+                        class="btn btn-primary"
+                        hidden="@ViewData["isView"]"
+                        asp-route-ViewType="@ViewData["ViewType"]"/>
+            </div>
+            <b>@ViewBag.message</b>
+        </form>
+    </div>
+</div>

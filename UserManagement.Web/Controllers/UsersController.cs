@@ -16,8 +16,10 @@ public class UsersController : Controller
     [HttpGet]
     public ViewResult List(string IsActive = "")
     {
+        ViewData["IsActive"] = IsActive;
+
         IEnumerable<UserListItemViewModel> items;
-        if (IsActive == "" || IsActive == null)
+        if (IsActive == "" || IsActive == "All" || IsActive == null)
         {
             items = _userService.GetAll().Select(p => new UserListItemViewModel
             {
