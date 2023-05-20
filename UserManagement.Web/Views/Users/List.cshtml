@@ -39,9 +39,28 @@
                                 Actions
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="btnToggleActions">
-                                <li><a class="dropdown-item" href="#">View</a></li>
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                <li><a
+                                        asp-controller="Userdetails"
+                                        asp-action="UserDetails"
+                                        asp-route-Id=@item.Id
+                                        asp-route-ViewType="View"
+                                        class="dropdown-item">View
+                                </a></li>
+                                <li><a
+                                        asp-controller="Userdetails"
+                                        asp-action="UserDetails"
+                                        asp-route-Id=@item.Id
+                                        asp-route-ViewType="Edit"
+                                        class="dropdown-item">Edit
+                                </a></li>
+                                <li>
+                                    <a
+                                        asp-controller="Userdetails"
+                                        asp-action="UserDetails"
+                                        asp-route-Id=@item.Id
+                                        asp-route-ViewType="Delete"
+                                        class="dropdown-item">Delete</a>
+                                </li>
                             </ul>
                         </div>
                     </td>
@@ -58,8 +77,7 @@
         <a asp-controller="Users" asp-action="List" asp-route-IsActive="False" class="btn btn-default">Non Active</a>
     </div>
 
-    <a href="#" class="btn btn-primary float-end">
+    <a asp-controller="Userdetails" asp-action="UserDetails" asp-route-ViewType="New" asp-route-IsActive="@ViewData["IsActive"]" class="btn btn-primary float-end">
         Add User
     </a>
 </div>
-
