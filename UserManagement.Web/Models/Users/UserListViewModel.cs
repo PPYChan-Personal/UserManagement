@@ -47,4 +47,16 @@ public class UserListItemViewModel
             DateOfBirth = model.DateOfBirth
         };
     }
+    public static implicit operator UserListItemViewModel(User model)
+    {
+        return new UserListItemViewModel
+        {
+            Id = model.Id,
+            Forename = model.Forename,
+            Surname = model.Surname,
+            Email = model.Email,
+            IsActive = model.IsActive,
+            DateOfBirth = model.DateOfBirth
+        };
+    }
 }
