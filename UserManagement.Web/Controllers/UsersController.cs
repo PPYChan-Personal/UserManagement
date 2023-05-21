@@ -21,28 +21,12 @@ public class UsersController : Controller
         IEnumerable<UserListItemViewModel> items;
         if (IsActive == "" || IsActive == "All" || IsActive == null)
         {
-            items = _userService.GetAll().Select(p => new UserListItemViewModel
-            {
-                Id = p.Id,
-                Forename = p.Forename,
-                Surname = p.Surname,
-                Email = p.Email,
-                IsActive = p.IsActive,
-                DateOfBirth = p.DateOfBirth
-            });
+            items = _userService.GetAll().Select(p => (UserListItemViewModel)p);
         }
         else
         {
             bool _isActive = Convert.ToBoolean(IsActive);
-            items = _userService.FilterByActive(_isActive).Select(p => new UserListItemViewModel
-            {
-                Id = p.Id,
-                Forename = p.Forename,
-                Surname = p.Surname,
-                Email = p.Email,
-                IsActive = p.IsActive,
-                DateOfBirth = p.DateOfBirth
-            });
+            items = _userService.FilterByActive(_isActive).Select(p => (UserListItemViewModel)p);
         }
         var model = new UserListViewModel
         {

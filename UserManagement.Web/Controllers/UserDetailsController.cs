@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Logging;
 using UserManagement.Data;
 using UserManagement.Services.Domain.Interfaces;
 using UserManagement.Web.Models.Users;
@@ -12,7 +13,14 @@ namespace UserManagement.WebMS.Controllers;
 public class UserDetailsController : Controller
 {
     private readonly IUserService _userService;
-    public UserDetailsController(IUserService userService) => _userService = userService;
+    private readonly ILogger<UserDetailsController> _userDetailslogger;
+
+    public UserDetailsController(IUserService userService, ILogger<UserDetailsController> logger)
+    {
+        _userService = userService;
+        _userDetailslogger = logger;
+
+    }
 
     [HttpGet]
     public ViewResult UserDetails(long Id = 0, string ViewType = "View")
@@ -22,15 +30,7 @@ public class UserDetailsController : Controller
         ViewData["btn_save_value"] = get_btn_save_value(ViewType);
         ViewData["btn_close_value"] = get_btn_close_value(ViewType);
 
-        var item = _userService.GetAll().Select(p => new UserListItemViewModel
-        {
-            Id = p.Id,
-            Forename = p.Forename,
-            Surname = p.Surname,
-            Email = p.Email,
-            DateOfBirth = p.DateOfBirth,
-            IsActive = p.IsActive,
-        }).Where(w => w.Id == Id).ToList();
+        var item = _userService.GetAll().Select(p => (UserListItemViewModel)p).Where(w => w.Id == Id).ToList();
 
         var model = new UserListItemViewModel();
         if (Id != 0 && item.Count() != 0)
@@ -46,6 +46,7 @@ public class UserDetailsController : Controller
     {
         if (close != "")
         {
+            _userDetailslogger.LogInformation("User details {model} is beening closed", model);
             return RedirectToAction("", "users");
         }
         if (save != "")
@@ -54,14 +55,17 @@ public class UserDetailsController : Controller
             {
                 case "Edit":
                     _userService.Update(model);
+                    _userDetailslogger.LogInformation("User Details have been updated");
                     break;
                 case "Delete":
                     _userService.Delete(model);
+                    _userDetailslogger.LogInformation("User have been deleted");
                     break;
                 case "New":
                     if (ModelState.IsValid)
                     {
                         _userService.Create(model);
+                        _userDetailslogger.LogInformation("User have been created");
                         return RedirectToAction("", "users");
                     }
                     else
@@ -114,4 +118,3 @@ public class UserDetailsController : Controller
         return _return;
     }
 }
-
