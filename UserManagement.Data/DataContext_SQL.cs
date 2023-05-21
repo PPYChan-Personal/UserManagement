@@ -9,8 +9,7 @@ using UserManagement.Models;
 namespace UserManagement.Data;
 public class DataContext_SQL : DbContext, IDataContext_SQL
 {
-    public DataContext_SQL() : base(new DbContextOptionsBuilder<DataContext_SQL>().UseSqlServer(@"Server=BPW001;Database=ABP;Integrated Security=True").Options) { }
-    //public DataContext_SQL() : base(new DbContextOptionsBuilder<DataContext_SQL>().UseSqlServer(@"Server=.\SQLEXPRESS;Database=UserManagement;Trusted_Connection=True").Options) { }
+    public DataContext_SQL() : base(new DbContextOptionsBuilder<DataContext_SQL>().UseSqlServer(@"Server=.\SQLEXPRESS;Database=UserManagement;Trusted_Connection=True").Options) { }
 
     public DbSet<User_SQL> Users { get; set; }
 
