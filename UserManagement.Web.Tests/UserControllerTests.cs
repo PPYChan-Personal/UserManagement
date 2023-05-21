@@ -28,8 +28,7 @@ public class UserControllerTests
         string forename = "Johnny",
         string surname = "User",
         string email = "juser@example.com",
-        bool isActive = true,
-        string DateOfBirth = "01/01/1900"
+        bool isActive = true
     )
     {
         var users = new[]
@@ -40,7 +39,7 @@ public class UserControllerTests
                 Surname = surname,
                 Email = email,
                 IsActive = isActive,
-                DateOfBirth = DateOfBirth
+                DateOfBirth = new DateTime(1900, 01, 01)
             }
         };
 
